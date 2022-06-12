@@ -17,6 +17,7 @@
 package com.example.recyclersample
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,10 +47,16 @@ class MainActivity : AppCompatActivity() {
             // cho vào adapter
             recyclerView.adapter = ProductAdapter(productList)
             // Khi click vào 1 item
-            recyclerView.onItemClick { recyclerView, position, v ->
-                v.card.setOnClickListener{
-                    Toast.makeText(applicationContext, position.toString(), Toast.LENGTH_SHORT).show()
+            recyclerView.addOnItemTouchListener(RecyclerItemClickListenr(this, recyclerView, object : RecyclerItemClickListenr.OnItemClickListener {
+                override fun onItemClick(view: View, position: Int) {
+                    view.card.setOnClickListener {
+                        Toast.makeText(applicationContext,position.toString(),Toast.LENGTH_SHORT).show()
+                    }
                 }
+
+                override fun onItemLongClick(view: View?, position: Int) {
+                    TODO("Not yet implemented")
+                }
+            }))
             }
         }
-    }
